@@ -11,16 +11,16 @@ services:
         networks:
             - fiergs-network
 
-    # fiergs-web-server:
-    #     container_name: fiergs-web-server
-    #     image: nginx:alpine
-    #     ports:
-    #         - 8000:80
-    #     volumes:
-    #         - ./:/var/www
-    #         - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-    #     networks:
-    #         - fiergs-network
+    fiergs-web-server:
+        container_name: fiergs-web-server
+        image: nginx:alpine
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - fiergs-network
 
     fiergs-oracle-db:
         container_name: fiergs-oracle-db
