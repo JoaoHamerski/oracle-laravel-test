@@ -1,6 +1,29 @@
 services:
-    fiergs-oracle-test:
-        container_name: fiergs-oracle-test
+    fiergs-app:
+        container_name: fiergs-app
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+            - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - fiergs-network
+
+    # fiergs-web-server:
+    #     container_name: fiergs-web-server
+    #     image: nginx:alpine
+    #     ports:
+    #         - 8000:80
+    #     volumes:
+    #         - ./:/var/www
+    #         - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    #     networks:
+    #         - fiergs-network
+
+    fiergs-oracle-db:
+        container_name: fiergs-oracle-db
         image: container-registry.oracle.com/database/express:21.3.0-xe
         environment:
             - ORACLE_PWD=secret
@@ -9,7 +32,12 @@ services:
             - 5500:5500
         volumes:
             - fiergs-oracle-data:/opt/oracle/oradata
+            - ./docker/oracle/setup-scripts:/opt/oracle/scripts/setup
+        networks:
+            - fiergs-network
 
 volumes:
     fiergs-oracle-data:
-        driver: local
+
+networks:
+    fiergs-network:
