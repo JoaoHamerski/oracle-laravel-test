@@ -1,0 +1,48 @@
+1. Configurar docker com oracle-xe
+2. Conectar com outros containers
+3. Configurar container do PHP para instalar o cliente base oracle e extensão oci8 do PHP (extensão requer que o servidor tenha cliente oracle)
+4. Instalação e configuração do pacote laravel-oci8 (requer oci8 ativada)
+5. Criação de script que migre o banco local MySQL para Oracle
+    OU Pegar .dump do ambiente dev/staging e todos importarem
+
+=========================================================================
+INFORMAÇÕES UTEIS
+=========================================================================
+
+ORACLE ARQUITETURA RESUMO:
+- Instância ORACLE: Combinação de memória e processos em execução que gerenciam o acesso aos dados em um banco de dados.
+- Container DataBase (CDB):
+- - Cada instância tem um container (CDB).
+- Pluggable Databases (PDBs):
+- Cada CDB pode ter múltiplos bancos (PDBs).
+- Usuários:
+- - Usuários são criados a nível de CDB ou PDB.
+- - Usuário CDB: Administra os PDBs do CDB.
+- - Usuário PDB: Tem permissão somente dentro do PDB.
+
+EXPLICAÇÃO ARQUITETURA MULTITENANT DE FORMA SIMPLES:
+https://chatgpt.com/share/0678856e-34ed-40d2-8790-116ba5d1cf06
+
+ORACLE DOWNLOAD (versão  21.15.0.0.0):
+- https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+
+ORACLE ADMINISTRATION TUTORIAL:
+- https://www.oracletutorial.com/oracle-administration/
+
+INSTALAR 
+- libaio.so (Debian: sudo apt install libaio)
+- Ubuntu o pacote se chama "libaio1t64", criar link simbolico para "libaio.so.1" em "/usr/lib/x86_64-linux-gnu/"
+
+ERRO
+- "sqlplus: error while loading shared libraries: libsqlplus.so: cannot open shared object file: No such file or directory"
+- Rodar "sudo ldconfig"
+
+CONECTAR FORA DO CONTAINER
+- sqlplus OT/secret@//localhost:1521/XEPDB1
+- XEPDB1
+
+LARAVEL PACOTE 
+- https://github.com/yajra/laravel-oci8
+
+INSTALAR EXTENSÃO PHP:
+- oci8
